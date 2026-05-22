@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Welcome to Fit Life Planner</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="welcome-container">
+
+    <img src="{{ url_for('static', filename='food.png') }}"
+         alt="Healthy Food"
+         class="welcome-image">
+
+    <h1> Welcome to Fit Life Planner</h1>
+
+    <p class="subtitle">
+        Track your meals, calories, BMI and health goals<br>
+        with smart AI guidance.
+    </p>
+
+    <a href="/login">
+        <button class="start-btn">Get Started</button>
+    </a>
+
+</div>
+
+</body>
+</html>

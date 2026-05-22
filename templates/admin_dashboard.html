@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>👨‍💼 Admin Dashboard</h1>
+
+    <!-- ANALYTICS CARDS -->
+
+    <div class="dashboard-cards">
+
+        <div class="card">
+            <h3>Total Users</h3>
+            <p>{{ total_users }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Total Reports</h3>
+            <p>{{ total_reports }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Active Users</h3>
+            <p>{{ active_users }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Inactive Users</h3>
+            <p>{{ inactive_users }}</p>
+        </div>
+
+    </div>
+
+    <br><br>
+
+    <!-- REGISTERED USERS -->
+
+    <h2>👥 Registered Users</h2>
+
+    <!-- SEARCH BAR -->
+
+    <form method="GET" action="/admin_dashboard">
+
+        <input
+            type="text"
+            name="search"
+            placeholder="Search Username"
+        >
+
+        <button type="submit">
+            Search
+        </button>
+
+    </form>
+
+    <br>
+
+    <!-- USERS TABLE -->
+
+    <table border="1" cellpadding="10" cellspacing="0">
+
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Action</th>
+            <th>Last Login</th>
+            <th>Status</th>
+        </tr>
+
+        {% for user in users %}
+
+        <tr>
+
+            <td>{{ user[0] }}</td>
+
+            <td>{{ user[1] }}</td>
+
+            <!-- DELETE BUTTON -->
+
+            <td>
+
+                <a href="/delete_user/{{ user[0] }}">
+
+                    <button>
+                        Delete
+                    </button>
+
+                </a>
+
+            </td>
+
+            <!-- LAST LOGIN -->
+
+            <td>{{ user[3] }}</td>
+
+            <!-- STATUS -->
+
+            <td>
+
+                {% if user[3] %}
+                    Active
+                {% else %}
+                    Inactive
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    <br><br>
+
+    <!-- REPORTS SECTION -->
+
+    <h2>📊 User Reports</h2>
+
+    <table border="1" cellpadding="10" cellspacing="0">
+
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>BMI</th>
+            <th>Calories</th>
+            <th>Goal</th>
+            <th>Progress</th>
+            <th>Date</th>
+        </tr>
+
+        {% for report in reports %}
+
+        <tr>
+
+            <td>{{ report[0] }}</td>
+            <td>{{ report[1] }}</td>
+            <td>{{ report[2] }}</td>
+            <td>{{ report[3] }}</td>
+            <td>{{ report[4] }}</td>
+            <td>{{ report[5] }}</td>
+            <td>{{ report[6] }}</td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    <br><br>
+
+    <a href="/logout">
+
+        <button>
+            Logout
+        </button>
+
+    </a>
+
+</div>
+
+</body>
+
+</html>

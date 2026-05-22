@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fit Life Planner - Health Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <button id="themeToggle" class="theme-btn">
+    🌙 Dark Mode
+</button>
+
+<header>
+    <nav>
+        <a href="/">Home</a> |
+        <a href="/login">Login</a> |
+        <a href="/signup">Signup</a>
+    </nav>
+    <br>
+</header>
+
+<div class="container">
+
+    <h1>Enter Your Health Details</h1>
+
+    <form action="/calculate" method="POST" enctype="multipart/form-data">
+
+        <label>Enter Weight (kg):</label><br>
+        <input type="number" name="weight" step="0.01" required><br><br>
+
+        <label>Enter Height (Example: 180 cm or 1.80 m):</label><br>
+        <input type="number" name="height" step="0.01" required><br><br>
+
+        <label>Enter Age:</label><br>
+        <input type="number" name="age" required><br><br>
+        <label>Current Weight Goal Progress</label><br>
+
+<label>Target Weight (kg):</label>
+<input type="number" name="target_weight" step="0.1" required>
+
+<br><br>
+
+        <label>Select Gender:</label><br>
+        <select name="gender" required>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select><br><br>
+
+        <label>Select Your Goal:</label><br>
+
+<div class="goal-cards">
+
+    <label class="goal-card">
+        <input type="radio" name="goal" value="weight_loss" required>
+        <span>🔥 Weight Loss</span>
+    </label>
+
+    <label class="goal-card">
+        <input type="radio" name="goal" value="weight_gain">
+        <span>⚡ Weight Gain</span>
+    </label>
+
+    <label class="goal-card">
+        <input type="radio" name="goal" value="maintain">
+        <span>💚 Maintain Weight</span>
+    </label>
+
+    <label class="goal-card">
+        <input type="radio" name="goal" value="muscle_gain">
+        <span>💪 Muscle Gain</span>
+    </label>
+
+</div>
+
+<br><br>
+
+<br><br>
+        <!-- Food 1 -->
+        <label>Food 1 (Veg Items):</label><br>
+        <select name="food1" required>
+            <option value="rice">Rice</option>
+            <option value="chapati">Chapati</option>
+            <option value="idli">Idli</option>
+            <option value="dosa">Dosa</option>
+            <option value="oats">Oats</option>
+            <option value="apple">Apple</option>
+            <option value="banana">Banana</option>
+            <option value="paneer">Paneer</option>
+            <option value="curd">Curd</option>
+            <option value="dal">Dal</option>
+            <option value="salad">Salad</option>
+            <option value="soup">Vegetable Soup</option>
+        </select><br><br>
+
+        <label>Quantity for Food 1:</label><br>
+        <input type="number" name="quantity1" required><br><br>
+
+        <label>Unit for Food 1:</label><br>
+        <select name="unit1" required>
+            <option value="pcs">Pieces (pcs)</option>
+            <option value="grams">Grams (g)</option>
+        </select><br><br>
+
+        <!-- Food 2 -->
+        <label>Food 2 (Liquids):</label><br>
+        <select name="food2" required>
+            <option value="milk">Milk</option>
+            <option value="buttermilk">Buttermilk</option>
+            <option value="fresh_juice">Fresh Juice</option>
+            <option value="protein_shake">Protein Shake</option>
+            <option value="abc_juice">ABC Juice</option>
+        </select><br><br>
+
+        <label>Quantity for Food 2:</label><br>
+        <input type="number" name="quantity2" step="0.01" required><br><br>
+
+        <label>Unit for Food 2:</label><br>
+        <select name="unit2" required>
+            <option value="ml">Millilitres (mL)</option>
+            <option value="litre">Litres (L)</option>
+        </select><br><br>
+
+       <!-- Food 3 -->
+
+<label>Food 3 (Non-Veg):</label><br>
+
+<select name="food3">
+
+    <option value="">Select Food</option>
+
+    <option value="egg">Egg</option>
+    <option value="chicken">Chicken</option>
+    <option value="mutton">Mutton</option>
+    <option value="prawns">Prawns</option>
+    <option value="burger">Burger</option>
+    <option value="pizza">Pizza</option>
+    <option value="fish">Fish</option>
+    <option value="sandwich">Sandwich</option>
+
+</select>
+
+<br><br>
+
+<label>Quantity for Food 3:</label><br>
+
+<input type="number" name="quantity3">
+
+<br><br>
+
+<label>Unit for Food 3:</label><br>
+
+<select name="unit3">
+
+    <option value="pcs">Pieces (pcs)</option>
+    <option value="grams">Grams (g)</option>
+
+</select>
+
+<br><br>
+
+        <!-- AI Food Scanner -->
+        <h3>AI Food Scanner</h3>
+
+        <label>Scan Food Using Camera (Optional)</label><br>
+
+        <input
+            type="file"
+            name="food_image"
+            accept="image/*"
+            capture="environment"
+        >
+
+        <br><br>
+
+        <button type="submit">Calculate BMI + Calories</button>
+
+    </form>
+
+</div>
+
+</body>
+<script>
+
+const toggleBtn = document.getElementById("themeToggle");
+
+toggleBtn.addEventListener("click", () => {
+
+    document.body.classList.toggle("dark-mode");
+
+    if(document.body.classList.contains("dark-mode")) {
+
+        toggleBtn.innerHTML = "☀️ Light Mode";
+
+    }
+
+    else {
+
+        toggleBtn.innerHTML = "🌙 Dark Mode";
+
+    }
+
+});
+
+</script>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Health Report</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Your Health Report</h1>
+    <div class="card">
+
+<h2>Progress: {{ progress }}%</h2>
+
+<div class="progress-container">
+
+    <div class="progress-bar"
+         style="width: {{ progress }}%;">
+
+        {{ progress }}%
+
+    </div>
+
+</div>
+
+
+<br>
+
+    <!-- BMI STATUS -->
+
+    <h2>BMI: {{ bmi }}</h2>
+
+    <p>
+        <strong>Status:</strong>
+
+        {% if status == "Normal Weight" %}
+            <span style="color:green;">{{ status }}</span>
+
+        {% elif status == "Underweight" %}
+            <span style="color:blue;">{{ status }}</span>
+
+        {% elif status == "Overweight" %}
+            <span style="color:orange;">{{ status }}</span>
+
+        {% else %}
+            <span style="color:red;">{{ status }}</span>
+
+        {% endif %}
+    </p>
+
+    <!-- DASHBOARD CARDS -->
+
+    <div class="dashboard-cards">
+
+        <div class="card">
+            <h3>🔥 Calories</h3>
+            <p>{{ calories }} kcal/day</p>
+        </div>
+
+        <div class="card">
+            <h3>💧 Water Intake</h3>
+            <p>{{ water_intake }} Litres/day</p>
+        </div>
+
+        <div class="card">
+            <h3>🥤 Water Glasses</h3>
+            <p>{{ water_glasses }} Glasses/day</p>
+        </div>
+
+        <div class="card">
+            <h3>🍽 Food Calories</h3>
+            <p>{{ total_food_calories }} kcal</p>
+        </div>
+
+    </div>
+
+    <!-- FOOD DETAILS -->
+
+    <h2>Selected Foods</h2>
+
+    <p>
+        {{ food1 }} →
+        {{ quantity1 }} {{ unit1 }}
+        → {{ cal1 }} calories
+    </p>
+
+    <p>
+        {{ food2 }} →
+        {{ quantity2 }} {{ unit2 }}
+        → {{ cal2 }} calories
+    </p>
+
+    <p>
+        {{ food3 }} →
+        {{ quantity3 }} {{ unit3 }}
+        → {{ cal3 }} calories
+    </p>
+
+    <!-- DIET PLAN -->
+
+    <h2>Suggested Diet Plan</h2>
+
+    <p>{{ diet }}</p>
+
+    <!-- GOAL PLAN -->
+
+    <h2>Goal Recommendation</h2>
+
+    <p>{{ goal_plan }}</p>
+
+    <!-- EXERCISE -->
+
+    <h2>Recommended Exercise Plan</h2>
+
+    <p>{{ exercise }}</p>
+
+    <!-- AI FOOD SCANNER -->
+
+    <h2>AI Food Scanner</h2>
+
+    {% if image_path %}
+
+        <img src="{{ image_path }}"
+             width="250"
+             style="border-radius:15px; margin-top:10px;">
+
+        <p><strong>Detected Food:</strong> {{ food_scan }}</p>
+
+        <p><strong>Calories:</strong> {{ scanner_calories }}</p>
+
+        <p><strong>Advice:</strong> {{ scanner_advice }}</p>
+
+    {% else %}
+
+        <p>No image uploaded.</p>
+
+    {% endif %}
+
+    <!-- HEALTH CHART -->
+
+    <h2>Health Analysis Chart</h2>
+
+    <canvas id="healthChart"></canvas>
+
+    <br><br>
+
+    <!-- WEEKLY DIET RECOMMENDATION -->
+
+    <h2>🥗 AI Weekly Diet Recommendation</h2>
+
+    <div class="diet-plan-container">
+
+    {% for day, meals in weekly_diet_plan.items() %}
+
+    <details class="diet-dropdown">
+
+        <summary>{{ day }}</summary>
+
+        <div class="diet-content">
+
+            <h4>🌞 Breakfast</h4>
+            <p>{{ meals["Breakfast"] }}</p>
+
+            <h4>🍛 Lunch</h4>
+            <p>{{ meals["Lunch"] }}</p>
+
+            <h4>🌙 Dinner</h4>
+            <p>{{ meals["Dinner"] }}</p>
+
+        </div>
+
+    </details>
+
+    {% endfor %}
+
+    </div>
+<br><br>
+    <!-- LOGOUT -->
+
+    <a href="/logout">
+        <button>Logout</button>
+    </a>
+
+</div>
+
+<!-- CHART JS -->
+
+<script>
+
+const ctx = document.getElementById('healthChart').getContext('2d');
+
+new Chart(ctx, {
+
+    type: 'bar',
+
+    data: {
+
+        labels: [
+            'BMI',
+            'Calories',
+            'Water',
+            'Food Calories'
+        ],
+
+        datasets: [{
+
+            label: 'Health Report',
+
+            data: [
+                {{ bmi }},
+                {{ calories }},
+                {{ water_intake }},
+                {{ total_food_calories }}
+            ],
+
+            borderWidth: 1
+
+        }]
+    },
+
+    options: {
+
+        responsive: true,
+
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+</script>
+<script>
+
+window.onload = function () {
+
+    let hour = new Date().getHours();
+
+    let message = "";
+
+    if(hour >= 6 && hour < 10){
+
+        message = "🍳 Breakfast Time! Eat healthy and stay energetic.";
+
+    }
+
+    else if(hour >= 12 && hour < 15){
+
+        message = "🍛 Lunch Time! Maintain balanced nutrition.";
+
+    }
+
+    else if(hour >= 18 && hour < 21){
+
+        message = "🥗 Dinner Time! Eat light and healthy.";
+
+    }
+
+    else{
+
+        message = "💧 Remember to drink enough water today!";
+
+    }
+
+    const reminder = document.createElement("div");
+
+    reminder.innerHTML = message;
+
+    reminder.style.position = "fixed";
+    reminder.style.top = "20px";
+    reminder.style.right = "20px";
+    reminder.style.background = "#22c55e";
+    reminder.style.color = "white";
+    reminder.style.padding = "15px 20px";
+    reminder.style.borderRadius = "12px";
+    reminder.style.boxShadow = "0 4px 10px rgba(0,0,0,0.2)";
+    reminder.style.zIndex = "9999";
+    reminder.style.fontWeight = "bold";
+
+    document.body.appendChild(reminder);
+
+    setTimeout(() => {
+
+        reminder.remove();
+
+    }, 4000);
+
+};
+
+</script>
+```
+
+</body>
+</html>

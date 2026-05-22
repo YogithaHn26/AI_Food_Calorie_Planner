@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - Fit Life Planner</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Login</h1>
+
+    <form action="/login" method="POST">
+
+        <label>Username</label>
+
+        <input type="text"
+               name="username"
+               required>
+
+        <label>Password</label>
+
+        <input type="password"
+               name="password"
+               required>
+
+        <button type="submit">
+            Login
+        </button>
+
+    </form>
+
+    <br>
+
+    <a href="/signup">
+        Don't have an account? Signup
+    </a>
+
+</div>
+
+</body>
+</html>
