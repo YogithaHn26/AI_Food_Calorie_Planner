@@ -34,6 +34,7 @@ def init_db():
             bmi REAL,
             calories INTEGER,
             goal TEXT,
+                   
             progress REAL,
             report_date TEXT
         )
